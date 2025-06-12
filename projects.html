@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio - Projects</title>
+    <style>
+        /* ----- COMMON STYLES (Same as index.html) ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #eef2f7 0%, #d6e4f0 100%);
+        }
+
+        .nav-container {
+            background-color: #494b59;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-items {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            margin: 0 20px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: #626575;
+        }
+
+        .footer {
+            width: 100%;
+            padding: 20px 10px;
+            text-align: center;
+            background-color: #494b59;
+            color: white;
+            font-size: 18px;
+            margin-top: 50px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 5rem;
+            right: 2rem;
+            background-color: rgb(246, 51, 51);
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            border-radius: 50%;
+            color: white;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            padding: 0.5rem;
+            z-index: 99;
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-items {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-item {
+                margin: 5px 0;
+            }
+
+            .back-to-top {
+                bottom: 2rem;
+                right: 1rem;
+            }
+        }
+
+        /* ----- PROJECTS PAGE SPECIFIC STYLES ----- */
+        .projects-page {
+            padding: 50px 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 50px;
+            color: #3498db;
+        }
+
+        .projects-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-category {
+            margin-bottom: 60px;
+        }
+
+        .category-title {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            color: #2c3e50;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-media {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .project-info {
+            padding: 25px;
+        }
+
+        .project-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .project-description {
+            margin-bottom: 20px;
+            color: #34495e;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .project-link:hover {
+            background-color: #2980b9;
+        }
+
+        .project-link.demo {
+            background-color: #2ecc71;
+        }
+
+        .project-link.demo:hover {
+            background-color: #27ae60;
+        }
+
+        /* Responsive adjustments for projects page */
+        @media screen and (max-width: 900px) {
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .page-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .category-title {
+                font-size: 1.8rem;
+            }
+
+            .project-links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body class="projects-page">
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <ul class="nav-items">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Projects</a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Header -->
+    <header>
+        <h1 class="page-title">My Projects</h1>
+        <p class="page-subtitle">A showcase of my recent work and accomplishments</p>
+    </header>
+
+    <!-- Projects Container -->
+    <div class="projects-container">
+        <!-- Other Projects -->
+        <section class="project-category">
+            <h2 class="category-title">Game Development</h2>
+            <div class="projects-grid">
+
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-media">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/wnflsEKKv2s?si=fXdQ0HTrP_mOkEeG"
+                                title="Alpha Project Demo"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">3D RTS Tower Defense</h3>
+                        <h4 class="project-subtitle" style="font-size: 1.2rem; color: #666; margin-top: 0;">Individual |
+                            Alpha Stage</h4>
+                        <p class="project-description">A strategic 3D RTS Tower Defense game built in Unity 6, where
+                            players command and upgrade defensive towers to repel waves of enemies. In this alpha
+                            prototype, core mechanics like hero skill casting, enemy pathfinding & simple AI, and unit
+                            command & control are implemented.</p>
+                        <div class="project-links">
+                            <a href="https://drive.google.com/file/d/1FFSUB2-uQKmOj7AwmZmPy7gUWb9gYbVy/view?usp=sharing"
+                                target="_blank" class="project-link demo">Google Drive</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-media">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/846A6joz7NE?si=6Yaof97oJbRV3XgG"
+                                title="Project Demo - 3D action"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">3D Action Game</h3>
+                        <h4 class="project-subtitle" style="font-size: 1.2rem; color: #666; margin-top: 0;">Individual |
+                            Completed</h4>
+                        <p class="project-description">A fast-paced 3D action game developed in Unity, where players
+                            control a skilled warrior battling waves of enemies. Master a dynamic combat system
+                            featuring light and heavy attack combos, precise dodging mechanics, and strategic timing to
+                            defeat challenging foes.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/hxzshen999/Assignment-TPS-Action.git" target="_blank"
+                                class="project-link demo">Git</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-media">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/IqjS3S0e46I?si=VrGFqxOY2_-J_Wl9"
+                                title="Project Demo - 3D action"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">3D Racing Game</h3>
+                        <h4 class="project-subtitle" style="font-size: 1.2rem; color: #666; margin-top: 0;">Individual |
+                            Completed</h4>
+                        <p class="project-description">A dynamic racing experience built in Unity, leveraging Unity's
+                            Physics System for realistic vehicle handling, collisions, and environmental interactions.
+                            The game features physically accurate car mechanics, including suspension, friction, and
+                            momentum, creating an immersive driving feel.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/hxzshen999/physicI_ICA2.git" target="_blank"
+                                class="project-link demo">Git</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card">
+                    <div class="project-media">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/p8VwsQPUBAc?si=lsBgem2n9AJ6iAfc"
+                                title="Project Demo - 3D action"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">3D FPS</h3>
+                        <h4 class="project-subtitle" style="font-size: 1.2rem; color: #666; margin-top: 0;">Individual |
+                            Completed</h4>
+                        <p class="project-description">A fully functional 3D FPS prototype built in Unity, featuring
+                            core shooter mechanics with polished weapon handling and interactive systems. Unique recoil
+                            patterns for each weapon to enhance realism and gameplay depth </p>
+                        <div class="project-links">
+                            <a href="https://github.com/hxzshen999/3D_FPS_ICA_V1.git" target="_blank"
+                                class="project-link demo">Git</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card">
+                    <div class="project-media">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/aBo0pa8Ji_Y?si=ds3X54KZyj-S04kW"
+                                title="Project Demo - 3D action"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">3D Combat Action</h3>
+                        <h4 class="project-subtitle" style="font-size: 1.2rem; color: #ff11df; margin-top: 0;">Group |
+                            Completed</h4>
+                        <p class="project-description">This immersive 3D action game challenges players to escape from
+                            an abandoned facility by navigating through treacherous environments, solving pathfinding
+                            puzzles to reach the boss arena, and ultimately defeating a powerful final opponent.
+                            Developed as a group of 4 project in Unity, the game features a dynamic combat system where
+                            players can utilize various weapons to execute combos through strategic light and heavy
+                            attack combinations. The combat mechanics emphasize skill-based gameplay, requiring players
+                            to master timing and weapon properties to overcome enemies.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/hxzshen999/WIU-MAOMAO-PRISM.git" target="_blank"
+                                class="project-link demo">Git</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="project-card">
+                    <div class="project-media">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/h_qMAEF2cow?si=RA55j3nqwtEOEBeG"
+                                title="Project Demo - 3D action"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">2D Physic Platformer</h3>
+                        <h4 class="project-subtitle" style="font-size: 1.2rem; color: #666; margin-top: 0;">Individual |
+                            Completed</h4>
+                        <p class="project-description">A technical showcase of physics simulation in Unity, this 2D
+                            platformer brings realistic environmental interactions to life through carefully implemented
+                            physics systems. As an individual project, I developed dynamic mechanics including variable
+                            gravity effects, buoyant water physics, deformable bridge structures, and force-based object
+                            interactions.</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!-- Web Development Projects -->
+        <section class="project-category">
+            <h2 class="category-title">Web Development & Cloud Programming Projects</h2>
+            <div class="projects-grid">
+
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-media">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/lTVxr558DtM?si=jaCCaHWK7gOjJkaf"
+                                title="Project Demo"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Responsive Web Development</h3>
+                        <h4 class="project-subtitle" style="font-size: 1.2rem; color: #666; margin-top: 0;">Individual
+                        </h4>
+                        <p class="project-description">A fully responsive, interactive web project showcasing the
+                            history, varieties, and culture of coffee. Built with modern HTML5, CSS3, and JavaScript,
+                            the site adapts seamlessly across devices (desktop, tablet, mobile) for optimal user
+                            experience.</p>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-media">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/jwE6ARWeOkA?si=BjOPpMmC3olZpF_T"
+                                title="Project Demo"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Cloud programming</h3>
+                        <h4 class="project-subtitle" style="font-size: 1.2rem; color: #666; margin-top: 0;">Individual
+                        </h4>
+                        <p class="project-description">A full-stack implementation of an interactive in-game shop using
+                            PlayFab’s backend services for secure data management, player inventories, and real-time
+                            transactions.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Other Projects -->
+        <section class="project-category">
+            <h2 class="category-title">Other Projects</h2>
+            <div class="projects-grid">
+
+
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-media">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/ANI8LmPDUp8?si=QcgOiJYaYG8Zl9m-"
+                                title="Project Demo"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">2D Level Design</h3>
+                        <h4 class="project-subtitle" style="font-size: 1.2rem; color: #666; margin-top: 0;">Individual
+                        </h4>
+                        <p class="project-description">This project demonstrates my expertise in fundamental game level
+                            design principles through a carefully crafted 2D environment. Designed as an individual
+                            project, it showcases thoughtful implementation of pacing, player guidance, and challenge
+                            progression to create an engaging gameplay experience.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <p>Connect with me: huangxiaoze1997@gmail.com | +65 8594 6248</p>
+        <p>© 2025 Huang Xiaoze. All rights reserved.</p>
+    </footer>
+
+    <!-- Back to top button -->
+    <a href="#" class="back-to-top">↑</a>
+</body>
+
+</html>
